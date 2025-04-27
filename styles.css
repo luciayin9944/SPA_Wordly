@@ -5,7 +5,7 @@ body {
     font-family: Arial, sans-serif;
     margin: 0;
     padding: 0;
-    background-color: #f4f4f4;
+    background-color: #e8f5e9; 
     color: #333;
     line-height: 1.6;
 }
@@ -26,10 +26,16 @@ h1 {
     border: 1px solid #ccc;
     border-radius: 4px;
 }
+
+/* Button Container */
+.button-container {
+  display: flex;                /* Enables Flexbox */
+  justify-content: center;      /* Centers the buttons horizontally */
+  gap: 10px;                    /* Adds space between the buttons */
+}
   
 #fetch-word {
     display: block;
-    margin: 10px auto;
     padding: 10px 20px;
     font-size: 16px;
     background-color: #007bff;
@@ -43,9 +49,10 @@ h1 {
     background-color: #0056b3;
 }
 
+
+/* New Word Button */
 #reset {
   display: block;
-  margin: 10px auto;
   padding: 10px 20px;
   font-size: 16px;
   background-color: #007bff;
@@ -59,7 +66,7 @@ h1 {
   background-color: #0056b3;
 }
   
-  /* Weather Display Section */
+  /* Word Display Section */
 #word-display {
     margin: 20px auto;
     padding: 10px;
@@ -69,6 +76,18 @@ h1 {
     border: 1px solid #ccc;
     border-radius: 4px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    display: none;  /* Hide by default */
+}
+
+h2 {
+  color: #007bff;
+  font-size: 2em;
+  margin-bottom: 10px;
+}
+
+audio {
+  margin-top: 10px;
+  border-radius: 8px;
 }
   
   /* Error Message */
@@ -83,16 +102,5 @@ h1 {
 .hidden {
     display: none;
 }
-  
-  /* BONUS: Loading Spinner */
-#loading-spinner {
-    display: none;
-    margin: 20px auto;
-    text-align: center;
-}
-  
-#loading-spinner img {
-    width: 50px;
-    height: 50px;
-}
+
   
