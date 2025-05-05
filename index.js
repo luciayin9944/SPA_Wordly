@@ -26,6 +26,8 @@ async function fetchWordData(word) {
 
         // Call the function to display the word explanation
         displayExplanation(data);
+        // // Add word to history only if fetch and display are successful
+        addToHistory(word);
     } catch (error) {
         displayError('Wrong word. Please check spelling');
     }
@@ -96,27 +98,117 @@ function displayError(message) {
     errorMessage.classList.remove('hidden'); // Make sure the error message is visible
 }
 
-// Add event listener for the "Search" button
-document.getElementById('fetch-word').addEventListener('click', () => {
-    const word = document.getElementById('word-input').value.trim(); // Get the word input by the user
-    if (word) {
-        // If a word is entered, call the fetchWordData function
-        fetchWordData(word);
-    } else {
-        // If no word is entered, display an error message
-        displayError('Please enter a word.')
+function addToHistory(word) {
+    let history = JSON.parse(localStorage.getItem('history')) || [];
+
+    history = history.filter(w => w != word);
+    history.unshift(word);
+
+    if (history.length >10) {
+        history.pop()
     }
+
+    localStorage.setItem('history', JSON.stringify(history));
+    // renderHistory();
+}
+
+const historyList = document.getElementById('history-list');
+function renderHistory() {
+    let history = JSON.parse(localStorage.getItem('history')) || [];
+    console.log("History contents:", history);
+    historyList.innerHTML = '';
+
+    history.forEach(word => {
+        const li = document.createElement('li');
+        li.textContent = word;
+        li.addEventListener('click', () => {
+            document.getElementById('word-input').value = word;
+            fetchWordData(word);
+        });
+        historyList.appendChild(li)
+    });
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+    // Search button
+    document.getElementById('fetch-word').addEventListener('click', () => {
+        const word = document.getElementById('word-input').value.trim();
+        if (word) {
+            fetchWordData(word);
+        } else {
+            displayError('Please enter a word.');
+        }
+    });
+
+    // Reset button
+    document.getElementById('reset').addEventListener('click', () => {
+        const wordInput = document.getElementById('word-input');
+        const wordDisplay = document.getElementById('word-display');
+        const errorMessage = document.getElementById('error-message');
+
+        wordInput.value = '';
+        wordDisplay.innerHTML = '';
+        wordDisplay.style.display = 'none';
+        errorMessage.classList.add('hidden');
+    });
+
+    // Recent Searches button
+    document.getElementById('history').addEventListener('click', () => {
+        const historyList = document.getElementById('history-list');
+        if (historyList.classList.contains('hidden')) {
+            renderHistory();
+            historyList.classList.remove('hidden');
+        } else {
+            historyList.classList.add('hidden');
+        }
+    });
 });
 
 
-// Add event listener for the "New Word" button to reset the page
-document.getElementById('reset').addEventListener('click', () => {
-    const wordInput = document.getElementById('word-input');
-    const wordDisplay = document.getElementById('word-display');
-    const errorMessage = document.getElementById('error-message');
 
-    wordInput.value = ''; // Clear the input field
-    wordDisplay.innerHTML = ''; // Clear the word display
-    document.getElementById('word-display').style.display = 'none';  // Hide word display
-    errorMessage.classList.add('hidden'); // Hide the error message if any
-});
+
+
+
+
+
+
+
+
+// // Add event listener for the "Search" button
+// document.getElementById('fetch-word').addEventListener('click', () => {
+//     const word = document.getElementById('word-input').value.trim(); // Get the word input by the user
+//     if (word) {
+//         // If a word is entered, call the fetchWordData function
+//         fetchWordData(word);
+//     } else {
+//         // If no word is entered, display an error message
+//         displayError('Please enter a word.')
+//     }
+// });
+
+
+// // Add event listener for the "New Word" button to reset the page
+// document.getElementById('reset').addEventListener('click', () => {
+//     const wordInput = document.getElementById('word-input');
+//     const wordDisplay = document.getElementById('word-display');
+//     const errorMessage = document.getElementById('error-message');
+
+//     wordInput.value = ''; // Clear the input field
+//     wordDisplay.innerHTML = ''; // Clear the word display
+//     document.getElementById('word-display').style.display = 'none';  // Hide word display
+//     errorMessage.classList.add('hidden'); // Hide the error message if any
+// });
+
+
+
+
+// // Add event listener for the "Recent Searches" button
+// document.getElementById('history').addEventListener('click', () => {
+//     const historyList = document.getElementById('history-list');
+//     if (historyList.classList.contains('hidden')) {
+//         renderHistory();  // 先渲染
+//         historyList.classList.remove('hidden'); // 显示出来
+//     } else {
+//         historyList.classList.add('hidden'); // 再次点击则隐藏
+//     }
+// });

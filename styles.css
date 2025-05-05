@@ -102,4 +102,49 @@ audio {
     display: none;
 }
 
+/* New Word Button */
+#history {
+  display: block;
+  padding: 10px 20px;
+  font-size: 16px;
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+#history:hover {
+  background-color: #0056b3;
+}
+
+#history-section {
+  margin: 30px auto;
+  padding: 15px;
+  width: 90%;
+  max-width: 600px;
+  background: #fffbea;
+  border: 1px solid #ffeeba;
+  border-radius: 5px;
+  box-shadow: 0 0 5px rgba(0,0,0,0.05);
+}
+
+#history-section h2 {
+  text-align: center;
+}
+
+#history-list {
+  list-style: none;
+  padding: 0;
+  text-align: center;
+}
+
+#history-list li {
+  display: inline-block;
+  margin: 5px 10px;
+  padding: 5px 10px;
+  background-color: #d3d2d1;
+  border-radius: 4px;
+  cursor: pointer;
+}
   
